@@ -4,7 +4,7 @@ const { performance } = require("perf_hooks");
 
 // This function can run for a maximum of 5 seconds
 export const config = {
-  maxDuration: 3,
+  maxDuration: 60,
 };
 
 const apiEndpoint = "https://api.boshamlan.com/v1/slugs";
