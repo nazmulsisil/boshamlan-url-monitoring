@@ -2,6 +2,11 @@ import axios from "axios";
 import async from "async";
 const { performance } = require("perf_hooks");
 
+// This function can run for a maximum of 5 seconds
+export const config = {
+  maxDuration: 3,
+};
+
 const apiEndpoint = "https://api.boshamlan.com/v1/slugs";
 const apiHeaders = {
   "X-Subdomain": "kw",

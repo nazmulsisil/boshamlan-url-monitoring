@@ -75,14 +75,21 @@ const Home = () => {
                 <thead>
                   <tr>
                     <th>Error URL</th>
-                    <th>Status</th>
+                    <th className="text-center">Status</th>
                   </tr>
                 </thead>
                 <tbody>
                   {data.errorUrls.map((error, index) => (
                     <tr key={index}>
                       <td>{error.url}</td>
-                      <td>{error.status}</td>
+                      <td>
+                        <div className="flex items-center justify-center">
+                          {/* style like a chip */}
+                          <div className="bg-red-500 text-white rounded px-2 w-auto">
+                            {error.status}
+                          </div>
+                        </div>
+                      </td>
                     </tr>
                   ))}
                 </tbody>
