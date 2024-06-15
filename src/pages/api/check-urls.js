@@ -1,6 +1,5 @@
 import axios from "axios";
 import async from "async";
-import nodemailer from "nodemailer";
 const { performance } = require("perf_hooks");
 
 const apiEndpoint = "https://api.boshamlan.com/v1/slugs";
@@ -40,7 +39,7 @@ const checkUrls = async () => {
     });
 
     const urls = [
-      ...childLinks.map((link) => link.href).slice(0, 2),
+      ...childLinks.map((link) => link.href),
       "https://www.boshamlan.com/404",
     ];
 
@@ -92,31 +91,7 @@ const checkUrls = async () => {
   }
 };
 
-const sendEmailNotification = async (errorUrls) => {
-  console.log({
-    user: process.env.EMAIL_USER,
-    pass: process.env.EMAIL_PASS,
-  });
-  const transporter = nodemailer.createTransport({
-    service: "gmail",
-    auth: {
-      user: process.env.EMAIL_USER, // Ensure these are set in your environment
-      pass: process.env.EMAIL_PASS, // Ensure these are set in your environment
-    },
-    host: "smtp.gmail.com",
-    port: 465,
-    secure: true,
-  });
-  const mailOptions = {
-    from: process.env.EMAIL_USER, // Ensure this is set in your environment
-    to: "sisil8sisil@gmail.com",
-    subject: "URL Monitoring Alert",
-    text: `The following URLs are down:\n\n${errorUrls
-      .map((e) => `URL: ${e.url}, Status: ${e.status}`)
-      .join("\n")}`,
-  };
-  await transporter.sendMail(mailOptions);
-};
+const sendEmailNotification = async (errorUrls) => {};
 
 export default async (req, res) => {
   try {
