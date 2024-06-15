@@ -25,14 +25,16 @@ const Home = () => {
         URL Monitoring Status
       </h1>
 
-      <div className="flex items-center justify-center mb-12">
-        <button
-          className="border rounded m-3 px-4 py-1 bg-blue-600 text-white"
-          onClick={fetchData}
-        >
-          Check URLs Now
-        </button>
-      </div>
+      {!loading && (
+        <div className="flex items-center justify-center mb-12">
+          <button
+            className="border rounded m-3 px-4 py-1 bg-blue-600 text-white"
+            onClick={fetchData}
+          >
+            Check URLs Now
+          </button>
+        </div>
+      )}
 
       {loading ? (
         <div className="flex flex-col justify-center items-center gap-4 text-blue-500">
