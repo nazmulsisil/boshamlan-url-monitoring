@@ -1,8 +1,6 @@
-// @ts-nocheck
-
 import axios from "axios";
 import async from "async";
-import nodemailer from "nodemailer";
+import twilio from "twilio";
 const { performance } = require("perf_hooks");
 
 const apiEndpoint = "https://api.boshamlan.com/v1/slugs";
@@ -75,7 +73,7 @@ const checkUrls = async () => {
     const timeSpent = (endTime - startTime) / 1000; // Time in seconds
 
     if (errorUrls.length > 0) {
-      sendEmailNotification(errorUrls);
+      sendSmsNotification(errorUrls);
     }
 
     return {
@@ -89,30 +87,23 @@ const checkUrls = async () => {
   }
 };
 
-const sendEmailNotification = (errorUrls) => {
-  const transporter = nodemailer.createTransport({
-    service: "gmail",
-    auth: {
-      user: "your-email@gmail.com", // Replace with your email
-      pass: "your-email-password", // Replace with your email password or app password
-    },
-  });
+const sendSmsNotification = (errorUrls) => {
+  const accountSid = "your_twilio_account_sid"; // Replace with your Twilio Account SID
+  const authToken = "your_twilio_auth_token"; // Replace with your Twilio Auth Token
+  const client = twilio(accountSid, authToken);
 
-  const mailOptions = {
-    from: "your-email@gmail.com", // Replace with your email
-    to: "sisil8sisil@gmail.com",
-    subject: "URL Monitoring Alert",
-    text: `The following URLs are down:\n\n${errorUrls
-      .map((e) => `URL: ${e.url}, Status: ${e.status}`)
-      .join("\n")}`,
-  };
+  const message = `The following URLs are down:\n\n${errorUrls
+    .map((e) => `URL: ${e.url}, Status: ${e.status}`)
+    .join("\n")}`;
 
-  transporter.sendMail(mailOptions, (error, info) => {
-    if (error) {
-      return console.log(error);
-    }
-    console.log("Email sent: " + info.response);
-  });
+  client.messages
+    .create({
+      body: message,
+      from: "your_twilio_phone_number", // Replace with your Twilio phone number
+      to: "your_phone_number", // Replace with your phone number
+    })
+    .then((message) => console.log(message.sid))
+    .catch((error) => console.error(error));
 };
 
 export default async (req, res) => {
