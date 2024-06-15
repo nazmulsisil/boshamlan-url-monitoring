@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import axios from "axios";
 
 const Home = () => {
@@ -18,8 +18,20 @@ const Home = () => {
   };
 
   return (
-    <div className="container">
-      <h1>URL Monitoring Status</h1>
+    <div className="container mx-auto">
+      <h1 className="text-3xl font-bold text-center my-6 text-blue-600">
+        URL Monitoring Status
+      </h1>
+
+      <div className="flex items-center justify-center mb-12">
+        <button
+          className="border rounded m-3 px-4 py-1 bg-blue-600 text-white"
+          onClick={fetchData}
+        >
+          Check URLs Now
+        </button>
+      </div>
+
       {loading ? (
         <div>Loading...</div>
       ) : (
@@ -40,12 +52,27 @@ const Home = () => {
               </tr>
             </tbody>
           </table>
-          <button
-            className="border rounded m-3 px-4 py-1 bg-blue-700 text-white"
-            onClick={fetchData}
-          >
-            Check URLs Now
-          </button>
+
+          {data.errorUrls && data.errorUrls.length > 0 && (
+            <div className="mt-12">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Error URL</th>
+                    <th>Status</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {data.errorUrls.map((error, index) => (
+                    <tr key={index}>
+                      <td>{error.url}</td>
+                      <td>{error.status}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          )}
         </div>
       )}
     </div>

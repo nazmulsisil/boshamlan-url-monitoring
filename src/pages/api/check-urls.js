@@ -1,6 +1,6 @@
 import axios from "axios";
 import async from "async";
-import twilio from "twilio";
+import nodemailer from "nodemailer";
 const { performance } = require("perf_hooks");
 
 const apiEndpoint = "https://api.boshamlan.com/v1/slugs";
@@ -40,9 +40,10 @@ const checkUrls = async () => {
     });
 
     const urls = [
-      ...childLinks.map((link) => link.href).slice(0, 2),
-      "https://www.boshamlan.com/404sdgfs",
+      ...childLinks.map((link) => link.href),
+      "https://www.boshamlan.com/404",
     ];
+
     totalUrlsCount = urls.length;
 
     const queue = async.queue(async (task, done) => {
@@ -76,13 +77,14 @@ const checkUrls = async () => {
     const timeSpent = (endTime - startTime) / 1000; // Time in seconds
 
     if (errorUrls.length > 0) {
-      sendSmsNotification(errorUrls);
+      await sendEmailNotification(errorUrls);
     }
 
     return {
       totalUrlsCount,
       errorUrlsCount: errorUrls.length,
       timeSpent,
+      errorUrls,
     };
   } catch (error) {
     console.error("Error fetching URLs from API:", error);
@@ -90,23 +92,21 @@ const checkUrls = async () => {
   }
 };
 
-const sendSmsNotification = (errorUrls) => {
-  const accountSid = process.env.TWILIO_ACCOUNT_SID; // Ensure these are set in your environment
-  const authToken = process.env.TWILIO_AUTH_TOKEN; // Ensure these are set in your environment
-  const client = twilio(accountSid, authToken);
-
-  const message = `The following URLs are down:\n\n${errorUrls
-    .map((e) => `URL: ${e.url}, Status: ${e.status}`)
-    .join("\n")}`;
-
-  client.messages
-    .create({
-      body: message,
-      from: process.env.TWILIO_PHONE_NUMBER, // Ensure this is set in your environment
-      to: process.env.MY_PHONE_NUMBER, // Ensure this is set in your environment
-    })
-    .then((message) => console.log(message.sid))
-    .catch((error) => console.error(error));
+const sendEmailNotification = async (errorUrls) => {
+  //   const transporter = nodemailer.createTransport({
+  //     service: 'gmail',
+  //     auth: {
+  //       user: process.env.EMAIL_USER, // Ensure these are set in your environment
+  //       pass: process.env.EMAIL_PASS // Ensure these are set in your environment
+  //     }
+  //   });
+  //   const mailOptions = {
+  //     from: process.env.EMAIL_USER, // Ensure this is set in your environment
+  //     to: 'sisil8sisil@gmail.com',
+  //     subject: 'URL Monitoring Alert',
+  //     text: `The following URLs are down:\n\n${errorUrls.map(e => `URL: ${e.url}, Status: ${e.status}`).join('\n')}`
+  //   };
+  //   await transporter.sendMail(mailOptions);
 };
 
 export default async (req, res) => {
