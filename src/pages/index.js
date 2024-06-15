@@ -17,6 +17,8 @@ const Home = () => {
     }
   };
 
+  const time = data.timeSpent?.toFixed();
+
   return (
     <div className="container mx-auto">
       <h1 className="text-3xl font-bold text-center my-6 text-blue-600">
@@ -46,9 +48,12 @@ const Home = () => {
             </thead>
             <tbody>
               <tr>
-                <td>{data.totalUrlsCount}</td>
-                <td>{data.errorUrlsCount}</td>
-                <td>{data.timeSpent?.toFixed()}s</td>
+                <td>{data.totalUrlsCount ?? "-"}</td>
+                <td>{data.errorUrlsCount ?? "-"}</td>
+                <td>
+                  {time}
+                  {time ? "s" : "-"}
+                </td>
               </tr>
             </tbody>
           </table>

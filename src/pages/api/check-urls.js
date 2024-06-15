@@ -40,7 +40,7 @@ const checkUrls = async () => {
     });
 
     const urls = [
-      ...childLinks.map((link) => link.href),
+      ...childLinks.map((link) => link.href).slice(0, 2),
       "https://www.boshamlan.com/404",
     ];
 
@@ -93,20 +93,29 @@ const checkUrls = async () => {
 };
 
 const sendEmailNotification = async (errorUrls) => {
-  //   const transporter = nodemailer.createTransport({
-  //     service: 'gmail',
-  //     auth: {
-  //       user: process.env.EMAIL_USER, // Ensure these are set in your environment
-  //       pass: process.env.EMAIL_PASS // Ensure these are set in your environment
-  //     }
-  //   });
-  //   const mailOptions = {
-  //     from: process.env.EMAIL_USER, // Ensure this is set in your environment
-  //     to: 'sisil8sisil@gmail.com',
-  //     subject: 'URL Monitoring Alert',
-  //     text: `The following URLs are down:\n\n${errorUrls.map(e => `URL: ${e.url}, Status: ${e.status}`).join('\n')}`
-  //   };
-  //   await transporter.sendMail(mailOptions);
+  console.log({
+    user: process.env.EMAIL_USER,
+    pass: process.env.EMAIL_PASS,
+  });
+  const transporter = nodemailer.createTransport({
+    service: "gmail",
+    auth: {
+      user: process.env.EMAIL_USER, // Ensure these are set in your environment
+      pass: process.env.EMAIL_PASS, // Ensure these are set in your environment
+    },
+    host: "smtp.gmail.com",
+    port: 465,
+    secure: true,
+  });
+  const mailOptions = {
+    from: process.env.EMAIL_USER, // Ensure this is set in your environment
+    to: "sisil8sisil@gmail.com",
+    subject: "URL Monitoring Alert",
+    text: `The following URLs are down:\n\n${errorUrls
+      .map((e) => `URL: ${e.url}, Status: ${e.status}`)
+      .join("\n")}`,
+  };
+  await transporter.sendMail(mailOptions);
 };
 
 export default async (req, res) => {
