@@ -116,7 +116,11 @@ const Home = () => {
                   {data.errorUrls.map((error, index) => (
                     <tr key={index}>
                       <td>
-                        <a href={error.url} className="text-blue-500">
+                        <a
+                          target="_blank"
+                          href={error.url}
+                          className="text-blue-500"
+                        >
                           {error.url}
                         </a>
                       </td>
