@@ -35,7 +35,16 @@ const Home = () => {
       </div>
 
       {loading ? (
-        <div>Loading...</div>
+        <div className="flex flex-col justify-center items-center gap-4 text-blue-500">
+          <div class="lds-ripple">
+            <div></div>
+            <div></div>
+          </div>
+
+          <div className="text-gray-800-500">
+            Checking URLs. Can take around 30 seconds.
+          </div>
+        </div>
       ) : (
         <div>
           <table>
