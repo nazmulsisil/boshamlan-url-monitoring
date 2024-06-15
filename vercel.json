@@ -4,12 +4,10 @@
       "runtime": "vercel-nodejs"
     }
   },
-  "cron": {
-    "jobs": [
-      {
-        "path": "/api/scheduled-check",
-        "schedule": "0 0 * * *"
-      }
-    ]
-  }
+  "crons": [
+    {
+      "path": "/api/scheduled-check",
+      "schedule": "0 0 * * *"
+    }
+  ]
 }
