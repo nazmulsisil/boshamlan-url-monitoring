@@ -36,7 +36,7 @@ const Home = () => {
 
       {loading ? (
         <div className="flex flex-col justify-center items-center gap-4 text-blue-500">
-          <div class="lds-ripple">
+          <div className="lds-ripple">
             <div></div>
             <div></div>
           </div>
