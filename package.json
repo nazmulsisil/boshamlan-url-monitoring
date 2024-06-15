@@ -12,6 +12,7 @@
     "async": "^3.2.5",
     "axios": "^1.7.2",
     "next": "14.2.4",
+    "nodemailer": "^6.9.13",
     "react": "^18",
     "react-dom": "^18",
     "twilio": "^5.1.1"

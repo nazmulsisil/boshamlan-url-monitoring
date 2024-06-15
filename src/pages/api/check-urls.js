@@ -39,7 +39,10 @@ const checkUrls = async () => {
       };
     });
 
-    const urls = childLinks.map((link) => link.href);
+    const urls = [
+      ...childLinks.map((link) => link.href).slice(0, 2),
+      "https://www.boshamlan.com/404sdgfs",
+    ];
     totalUrlsCount = urls.length;
 
     const queue = async.queue(async (task, done) => {
@@ -88,8 +91,8 @@ const checkUrls = async () => {
 };
 
 const sendSmsNotification = (errorUrls) => {
-  const accountSid = "your_twilio_account_sid"; // Replace with your Twilio Account SID
-  const authToken = "your_twilio_auth_token"; // Replace with your Twilio Auth Token
+  const accountSid = process.env.TWILIO_ACCOUNT_SID; // Ensure these are set in your environment
+  const authToken = process.env.TWILIO_AUTH_TOKEN; // Ensure these are set in your environment
   const client = twilio(accountSid, authToken);
 
   const message = `The following URLs are down:\n\n${errorUrls
@@ -99,8 +102,8 @@ const sendSmsNotification = (errorUrls) => {
   client.messages
     .create({
       body: message,
-      from: "your_twilio_phone_number", // Replace with your Twilio phone number
-      to: "your_phone_number", // Replace with your phone number
+      from: process.env.TWILIO_PHONE_NUMBER, // Ensure this is set in your environment
+      to: process.env.MY_PHONE_NUMBER, // Ensure this is set in your environment
     })
     .then((message) => console.log(message.sid))
     .catch((error) => console.error(error));

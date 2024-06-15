@@ -36,7 +36,7 @@ const Home = () => {
               <tr>
                 <td>{data.totalUrlsCount}</td>
                 <td>{data.errorUrlsCount}</td>
-                <td>{data.timeSpent.toFixed()}s</td>
+                <td>{data.timeSpent?.toFixed()}s</td>
               </tr>
             </tbody>
           </table>
