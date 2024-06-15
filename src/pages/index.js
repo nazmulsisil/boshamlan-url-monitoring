@@ -2,8 +2,8 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 
 const Home = () => {
-  const [data, setData] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const [data, setData] = useState({});
+  const [loading, setLoading] = useState(false);
 
   const fetchData = async () => {
     try {
@@ -17,12 +17,8 @@ const Home = () => {
     }
   };
 
-  useEffect(() => {
-    fetchData();
-  }, []);
-
   return (
-    <div>
+    <div className="container">
       <h1>URL Monitoring Status</h1>
       {loading ? (
         <div>Loading...</div>
@@ -40,11 +36,16 @@ const Home = () => {
               <tr>
                 <td>{data.totalUrlsCount}</td>
                 <td>{data.errorUrlsCount}</td>
-                <td>{data.timeSpent}s</td>
+                <td>{data.timeSpent.toFixed()}s</td>
               </tr>
             </tbody>
           </table>
-          <button onClick={fetchData}>Check URLs Now</button>
+          <button
+            className="border rounded m-3 px-4 py-1 bg-blue-700 text-white"
+            onClick={fetchData}
+          >
+            Check URLs Now
+          </button>
         </div>
       )}
     </div>

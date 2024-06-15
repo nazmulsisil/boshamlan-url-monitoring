@@ -1,9 +1,4 @@
 {
-  "functions": {
-    "api/scheduled-check.js": {
-      "runtime": "vercel-nodejs"
-    }
-  },
   "crons": [
     {
       "path": "/api/scheduled-check",

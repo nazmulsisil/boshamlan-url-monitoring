@@ -18,16 +18,81 @@
 
 body {
   color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
 }
 
 @layer utilities {
   .text-balance {
     text-wrap: balance;
+  }
+}
+
+/* Basic table styles */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+  font-size: 18px;
+  text-align: left;
+}
+
+/* Table header styles */
+th,
+td {
+  padding: 12px 15px;
+  border-bottom: 1px solid #ddd;
+}
+
+/* Table header background and text color */
+th {
+  background-color: #f4f4f4;
+  color: #333;
+}
+
+/* Zebra stripe rows */
+tr:nth-of-type(even) {
+  background-color: #f9f9f9;
+}
+
+/* Hover effect for rows */
+tr:hover {
+  background-color: #f1f1f1;
+}
+
+/* Responsive table */
+@media (max-width: 600px) {
+  table,
+  th,
+  td {
+    display: block;
+  }
+
+  tr {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 15px;
+  }
+
+  th,
+  td {
+    width: 100%;
+    box-sizing: border-box;
+    text-align: right;
+  }
+
+  th::before,
+  td::before {
+    content: attr(data-label);
+    float: left;
+    font-weight: bold;
+    text-transform: uppercase;
+  }
+
+  th {
+    background-color: transparent;
+    color: inherit;
+  }
+
+  th::before {
+    display: none;
   }
 }
