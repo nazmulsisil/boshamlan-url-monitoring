@@ -30,13 +30,17 @@ const Home = () => {
 
   return (
     <div className="container mx-auto">
-      <h1 className="text-3xl font-bold text-center my-6 text-blue-600">
+      <h1 className="text-3xl text-center font-bold my-6 text-blue-600">
         URL Monitoring Status
       </h1>
 
       {!loading && (
         <div className="flex items-center justify-center mb-12">
           <div className="flex flex-col items-center w-full">
+            <h3 className="w-full text-start mb-1">
+              Optionally you can pass a list of additional URLs to check, URLs
+              must start with http:// or https://
+            </h3>
             <textarea
               className="border rounded w-full p-2 mb-4"
               rows="4"

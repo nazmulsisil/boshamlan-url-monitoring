@@ -55,6 +55,18 @@ const checkUrls = async (additionalUrls, skipSitemap) => {
 
     totalUrlsCount = urls.length;
 
+    if (urls.length === 0) {
+      const endTime = performance.now();
+      const timeSpent = (endTime - startTime) / 1000; // Time in seconds
+      return {
+        totalUrlsCount: 0,
+        crawledUrlsCount: 0,
+        errorUrlsCount: 0,
+        timeSpent,
+        errorUrls: [],
+      };
+    }
+
     const queue = async.queue(async (task, done) => {
       try {
         const response = await axios.get(task.url);
