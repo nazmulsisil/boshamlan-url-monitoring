@@ -36,7 +36,7 @@ const Home = () => {
 
       {!loading && (
         <div className="flex items-center justify-center mb-12">
-          <div className="flex flex-col items-center">
+          <div className="flex flex-col items-center w-full">
             <textarea
               className="border rounded w-full p-2 mb-4"
               rows="4"
@@ -53,7 +53,7 @@ const Home = () => {
                 className="mr-2"
               />
               <label htmlFor="skipSitemap" className="text-gray-700">
-                Skip Sitemap Link
+                Skip our sitemap links
               </label>
             </div>
             <button
@@ -111,10 +111,20 @@ const Home = () => {
                 <tbody>
                   {data.errorUrls.map((error, index) => (
                     <tr key={index}>
-                      <td>{error.url}</td>
+                      <td>
+                        <a href={error.url} className="text-blue-500">
+                          {error.url}
+                        </a>
+                      </td>
                       <td>
                         <div className="flex items-center justify-center">
-                          <div className="bg-red-500 text-white rounded px-2 w-auto">
+                          <div
+                            className={`rounded px-2 w-auto ${
+                              error.status === 404
+                                ? "bg-red-500 text-white"
+                                : ""
+                            }`}
+                          >
                             {error.status}
                           </div>
                         </div>

@@ -48,13 +48,9 @@ const checkUrls = async (additionalUrls, skipSitemap) => {
         };
       });
 
-      urls = [
-        ...childLinks.map((link) => link.href),
-        "https://www.boshamlan.com/404",
-        ...additionalUrls,
-      ];
+      urls = [...childLinks.map((link) => link.href), ...additionalUrls];
     } else {
-      urls = [...additionalUrls, "https://www.boshamlan.com/404"];
+      urls = [...additionalUrls];
     }
 
     totalUrlsCount = urls.length;
