@@ -11,7 +11,7 @@ const apiEndpoint = "https://api.boshamlan.com/v1/slugs";
 const apiHeaders = {
   "X-Subdomain": "kw",
 };
-const concurrencyLimit = 100;
+const concurrencyLimit = 30; // Limit the number of concurrent requests
 const errorUrls = [];
 let totalUrlsCount = 0;
 let crawledUrlsCount = 0;
