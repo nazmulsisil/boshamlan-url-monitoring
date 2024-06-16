@@ -28,10 +28,15 @@ const Home = () => {
 
   const time = data.timeSpent?.toFixed();
 
+  // const found402PlusError = useMemo(
+  //   () => data.errorUrls?.find((error) => error.status >= 402),
+  //   [data.errorUrls]
+  // );
+
   return (
     <div className="container mx-auto">
       <h1 className="text-3xl text-center font-bold my-6 text-blue-600">
-        URL Monitoring Status
+        Boshamlan Website Health Check
       </h1>
 
       {!loading && (
@@ -103,6 +108,21 @@ const Home = () => {
             </tbody>
           </table>
 
+          {data.errorUrls && data.errorUrls.length === 0 && (
+            <div className="mt-12 flex flex-col items-center">
+              <div
+                className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative"
+                role="alert"
+              >
+                <strong className="font-bold">🎉 Success!</strong>
+                <span className="block sm:inline">
+                  {" "}
+                  All URLs are working fine. No errors found.
+                </span>
+              </div>
+            </div>
+          )}
+
           {data.errorUrls && data.errorUrls.length > 0 && (
             <div className="mt-12">
               <table>
@@ -145,6 +165,8 @@ const Home = () => {
           )}
         </div>
       )}
+
+      <div className="h-6" />
     </div>
   );
 };
