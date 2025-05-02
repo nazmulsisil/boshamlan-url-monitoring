@@ -83,7 +83,7 @@ const Home = () => {
           </div>
 
           <div className="text-gray-800-500">
-            Checking URLs. Can take around 30 seconds.
+            Checking URLs. Can take around 120 seconds.
           </div>
         </div>
       ) : (
