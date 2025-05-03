@@ -8,7 +8,8 @@ export const config = {
 };
 
 const apiEndpoint = "https://api2.boshamlan.com/v1/slugs";
-const SUBDOMAINS = ["om", "qa", "ae", "bh"]; // All subdomains to check
+// Default subdomains if none are specified
+const DEFAULT_SUBDOMAINS = ["om", "qa", "ae", "bh"];
 const concurrencyLimit = 30; // Limit the number of concurrent requests
 const errorUrls = [];
 let totalUrlsCount = 0;
@@ -134,7 +135,11 @@ const checkUrlsForSubdomain = async (
   }
 };
 
-const checkUrls = async (additionalUrls, skipSitemap) => {
+const checkUrls = async (
+  additionalUrls,
+  skipSitemap,
+  subdomains = DEFAULT_SUBDOMAINS
+) => {
   errorUrls.length = 0;
   crawledUrlsCount = 0;
   totalUrlsCount = 0;
@@ -143,8 +148,8 @@ const checkUrls = async (additionalUrls, skipSitemap) => {
   try {
     const subdomainResults = [];
 
-    // Check each subdomain sequentially to avoid hammering the API
-    for (const subdomain of SUBDOMAINS) {
+    // Check each selected subdomain sequentially to avoid hammering the API
+    for (const subdomain of subdomains) {
       const result = await checkUrlsForSubdomain(
         subdomain,
         additionalUrls,
@@ -177,9 +182,14 @@ const checkUrls = async (additionalUrls, skipSitemap) => {
 const sendEmailNotification = async (errorUrls) => {};
 
 export default async (req, res) => {
-  const { additionalUrls, skipSitemap } = req.body;
+  const { additionalUrls, skipSitemap, subdomains } = req.body;
+
   try {
-    const result = await checkUrls(additionalUrls || [], skipSitemap);
+    const result = await checkUrls(
+      additionalUrls || [],
+      skipSitemap,
+      subdomains
+    );
     res.json(result);
   } catch (error) {
     res.status(500).json({ error: "Failed to check URLs" });
