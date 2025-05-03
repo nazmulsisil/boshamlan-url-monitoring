@@ -185,8 +185,9 @@ const Home = () => {
             <div></div>
           </div>
 
-          <div className="text-gray-800-500">
-            Checking URLs. Can take around 120 seconds.
+          <div className="text-gray-700 text-center max-w-md">
+            Checking URLs. This process is limited to 60 seconds. If it times
+            out, please try again with fewer subdomains selected.
           </div>
         </div>
       ) : (
