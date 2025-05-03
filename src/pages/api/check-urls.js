@@ -2,7 +2,7 @@ import axios from "axios";
 import async from "async";
 const { performance } = require("perf_hooks");
 
-// This function can run for a maximum of 60 seconds
+// This function can run for a maximum of 60 seconds (check vercel limits)
 export const config = {
   maxDuration: 60,
 };
